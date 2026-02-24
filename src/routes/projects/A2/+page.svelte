@@ -1,0 +1,165 @@
+<svelte:head>
+	<title>Vis & Society Assignment 2</title>
+	<link rel="stylesheet" href="https://vis-society.github.io/assignments/report.css" />
+</svelte:head>
+<body>
+	<header>
+		<h1>
+			<small>Assignment 2</small>
+			Exploratory Data Analysis
+		</h1>
+
+		<p>
+			<strong>Esther Magbagbeola</strong> — <em>estymagb@mit.edu</em>
+		</p>
+	</header>
+	<main>
+		<section>
+			<h2>Subtheme: Transit-Oriented Development</h2>
+
+			<h3>Overall Analysis Questions</h3>
+			<ol>
+				<li>What are typical demographics of public transit users?</li>
+				<li>What benefits are there to transit-oriented development?</li>
+				<li>How does transit-oriented development affect accesibility?</li>
+				<li>Why are some subdivisions not complying with the <a href="https://www.wbur.org/news/2024/05/09/mbta-communities-act-zoning-map">MBTA Communities Act</a>?</li>
+			</ol>
+			<h4><u>Motivations:</u> Transit-Oriented Development is currently my career interest as an 11-6,
+				so most of these questions are based in previous coursework, research and/or my own curiousity.</h4>
+		</section>
+
+		<section>
+			<h2>Discoveries & Insights</h2>
+			<figure>
+				<img src="visuals/transit type to work.png" alt="" />
+				<figcaption>
+				Before diving into the idea of TOD, I think it's important to first define the current state of transit in the U.S.
+				This can first be defined by the breakdown of how Americans get to work, ensuring some level of everyday travel by
+				specific type of travel modes. As culturally understand in our car-driven society, travel by car dominates--
+				but the amount of public transit users is twice the percentage of the national average. Massachusetts must have
+				effective system, which we can find out more about the MBTA below.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/MBTA Transit Fleet Count.png" alt="Polygon size proportion graph depicting the total amount of MBTA routes by transit type." />
+				<figcaption>
+				Moving on, let's define the situation of TOD in Boston. We will calculate the amount of total MBTA routes grouped by transit type, to determine
+				how the MBTA approaches TOD. To clarify our findings, I think its important to note that all routes have Agency IDs of Cape Cod Flyer
+				Authority, which only owns one orute in joint collaboration with the MBTA: Boston to Cape Cod weekend/holiday train. Additionally, this route
+				has mulitple duplicates within itself, so it was also important to to count by distinct route as well. From the graph, it seems like the MBTA
+				prioritized rail replacement bus services the most-- however this service is typically meant to a subsitute for maintenance on rapid/rail transit.
+				Local bus is actually the highest normal running service here-- showing how rail allows one to travel farther distances, while buses' roles are
+				to get passangers to the right location. Does this rail replacement quantity indicate many safety measures-- or frequent maintenance/delays?
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/public transit commuters.png" alt="Two graphs, comparing Ridership by car and transit in 2014 to 2024. POV dominates work travel, but both have seen a decline in the last 10 years." />
+				<figcaption>
+				While understanding the framework of the MBTA, it's important to know <i>who</i> is utilizing the MBTA too. In the figure, while its apparent
+				many people use MBTA/other authority services to commute on a daily basis to work, car ridership is heavily favored. It's also important to
+				note that ridership for both car and public transit has descreased-- most likely due to an uptick of work-from-home positions resulting
+				from the CoVID pandemic. However, Middlesex County, part of the Boston-Cambridge metropolitan, seems to have the largest amount of users--
+				does this ridership quantity directly tie to accesibility, specificially, proximity?
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/rapid transit_wheelchair_access.png" alt="" />
+				<figcaption>
+				To determine the beneficiaries of MBTA, we explore the amount of accessible stations each major rail transit. To manuever
+				this graph, non-terminal routes had their duplicates removed (via Stop_Id; as inbound and outbound) to count wheelchair access stations once.
+				Most stations have wheelchair access, except for the Green Line. This discrepancy points to tram/outside stations having lower accessibility.
+				Additionally, to find percent of wheelchair stations, usage of field indicators (wheelchair=1) and quotient
+				between count and total stations was determined too. This describes general upkeep by the MBTA, to ensure TOD is for any type physical body,
+				but how does accessibility frame to location proximity? Let's discover more.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/Public Transit Commuters vs. Network.png" alt="" />
+				<figcaption>
+				Further clarification-- as expected, the closer to the metro hub, or center of MBTA routes a county is,
+				the more likely they would have public transit commuters to work. Worcester and Bristol are closer
+				relative to other Massachusetts counties, but their commuters are much smaller, most likely due to work
+				commutes being in their respective (or closer) counties.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/low cost house proximity.png" alt="" />
+				<figcaption>
+				We enter a new frame of reference here, as we define how close low-cost housing is to MBTA routes and stops.
+				Multiple duplicate addresses of houses and MBTA stops were filtered out, alongside houses with a price tag of
+				"$0", as this would not fit our estimate properly. Low-cost houses were defined as any housing &lt; $400,000,
+				built after 2000, as this estimate would show how many have been built in the recent century. Unfortunately,
+				as Boston is an expensive but old city, this number was relatively low, but does indicate most of these new low-cost
+				housing are in spaces where relative number of MBTA routes are available. However, how does this finding relate
+				when we focus on affordable housing? Let's find out.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/subsidized housing to lot size.png" alt="" />
+				<figcaption>
+				Let's first define subsidized housing. Using a usage code on residential sale table and allowing any house
+				existing in Boston as part of our data set (with removal of duplicates, negative prices, or zero lot size)
+				we find subsidized housing tends to be relatively large, regardless of price. While the scale in
+				prices seem relatively expensive (reaching almost 11 million), the top address price is a makeup of multiple
+				properties. While not much, it does seem there is an effort for subsidized housing, especially as the government
+				heavily funds it, but it'd be interesting to see this trend across the state.
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/mbta prox subsidized housing.png" alt="" />
+				<figcaption>
+				Now to explore the housing proximity, it follows the previous trend: its location in Boston
+				is close to many MBTA routes, conventionally around South End, a relatively residential neighborhood.
+				While subsidized housing exists in MBTA proximity, there are many places outside of Boston that don't, leading
+				incompliances and unable to expand TOD. Let's explore another example.
+				</figcaption>
+			</figure>
+
+
+			<figure>
+				<img src="visuals/Non Compliant MBTA communities.png" alt="Visual depicting non-compliant communities having little access to MBTA transit." />
+				<figcaption>
+				<p> In 2024, the MBTA Communities Act was enacted to encourage communities to increase affordable housing in locations near MBTA routes to increase
+					accessibility. Multiple county subdivisions failed to comply, in which we see labeled here. This next figure uses quantitative data to predict these communities' reasoning for not abiding to MBTA policy.
+				I focused on rapid transit such as frequent bus (1 every fifteen minutes as outlined by the MBTA), commuter and subway rail, their most reliable services.
+				The number of transit services within a two-mile radius of these cities is described in a deepening scale of blue.
+				</p>
+				<p>Bordered by red, most of these non-compliant communities are not located in relative reach of current MBTA rapid transit. This could indicate
+				cost-effect to abide by MBTA policy is not worth the effort of increasing family/afforable housing.
+				</p>
+				</figcaption>
+			</figure>
+
+			<figure>
+				<img src="visuals/Rent Burden Non Compliant.png" alt="" />
+				<figcaption>
+				Finally, is it worth for these communities to comply. Increasing number of rent-burdened households encourages
+				other subdivisions to have economic-friendly alternatives nearby for residents, but os that the case for these
+				aforementioned subdivisions? Most sit comfortably of 20-30% of residents with rent burden, meaning
+				most can deal with current economic struggles. This does not excuse noncompliance, as this graphs shows some households
+				would benefit from it--however, it can present a reason why.
+				</figcaption>
+			</figure>
+
+		</section>
+
+		<section>
+			<h2>Summary</h2>
+
+			<p> In this exploration, refreshing the idea of transit-oriented development and its different factors at play-- accesibility, demographic,
+				location proximity, and method. These factors all frame the current situation around growing transit-oriented development in Boston,
+				Massachusetts and the United States. I found it interesting how much fail-safe methods the MBTA has in-store for the rail transit, making up
+				the largest quantity of MBTA fleet types as shown in figure 2. Additionally, while infrastructure is something well-established by the MBTA,
+				they must focus on perspective-- that is, convincing communities in future-planned route proximity, they will benefit from the development.
+				If not, NIMBYism is a terrible drug, which can refute TOD benefits meant for the most vulnerable.
+			</p>
+		</section>
+	</main>
+</body>
