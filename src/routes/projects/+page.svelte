@@ -1,8 +1,11 @@
+<script>
+    import projects from "$lib/projects.json";
+</script>
 <svelte:head>
-  <title>Projects</title>
+  <title> Projects</title>
 </svelte:head>
 <nav>
-    <li><a href="..">Home</a>
+    <li><a href=".">Home</a>
     </li>
     <li><a href="/contact">Contact</a>
     </li>
@@ -13,13 +16,20 @@
     <li><a href="https://github.com/estymagb" target="_blank">Github</a>
     </li>
 </nav>
-<h1>Projects</h1><div class="projects" id="projects">
+
+<h1>{projects.length} Projects</h1>
+<div class="projects" id="projects">
+{#each projects as p}
     <article>
-        <h2>Coming Soon...</h2>
+        <h2>{p.title}</h2>
         <!----<h2><a href="A2/A2_report">Exploratory Analysis</a>></h2>-->
-        <img src="thumbnails/Screenshot 2026-02-20 231456.png" alt="Thumbnail of first assignment.">
-        <p>This is my first visualization assignment in 11.C35 using digital tools, also known as A2: Visualization Exploratory Analysis. Click header to see the full report on <i>Transit Oriented Development</i> (TOD).</p>
+        <img src="thumbnails/Screenshot 2026-02-20 231456.png" alt="Thumbnail of first assignment." />
+        <p>{p.description}</p>
     </article>
+{/each}
+</div>
+
+    <!----
     <article>
         <h2>Quidem sint magni animi!</h2>
         <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
@@ -74,5 +84,4 @@
         <h2>Possimus repellendus magnam dolore.</h2>
         <img src="https://vis-society.github.io/labs/2/images/empty.svg" alt="">
         <p>Temporibus illo voluptate, commodi soluta eligendi delectus veniam in dolores eum, pariatur qui? Repellendus totam, id dolor aut recusandae architecto numquam, dolores velit iste eius modi laborum dolorum laboriosam debitis.</p>
-    </article>
-</div>
+    </article>-->
