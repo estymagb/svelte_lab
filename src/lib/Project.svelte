@@ -1,0 +1,217 @@
+<script>
+    export let data = {};
+</script>
+<article>
+    <h2>{data.title}</h2>
+    <img src={data.image} alt="" />
+    <p>{data.description}</p>
+</article>
+<style>
+    /*
+   NOTE: this skeleton will help you go through steps 1-3 (some parts are missing for you to work on them!)
+   For a better learning, we recomend you take individual parts of this skeleton step-by-step, so that you can see how
+   each part changes the webpage's style as explained in the course website.
+*/
+
+
+
+/*
+   :root is used to define global CSS variables (custom properties)
+   These variables can be reused throughout the stylesheet to maintain consistency
+   For examplem we can use :root to define colors
+*/
+:root {
+    --color-accent: oklch(65% 50% 0); /* Primary accent color in OKLCH format */
+    --border-gray: oklch(80% 3% 200); /* Gray for borders */
+    /* ADD the rest of the color definitions here if needed! */
+}
+
+/* STEP 1: Prevent content from getting too wide */
+
+/*
+    Here we can define the base style for the body element. We already added this in Lab 1, but let's complete it!
+*/
+body {
+    font: 100%/1.5 system-ui; /* 100% font size, 1.5 line height, system font. Same as in lab 1 */
+    max-width: 100ch; /* Limits width to 50 rems for better readability */
+    margin-inline: max(1em, (100% - 100ch) / 2);
+    /* Add here padding around the body */
+    padding: auto;
+    accent-color: var(--color-accent);
+}
+
+/* STEP 2: Styling the navigation bar */
+
+/*
+   Step 2.1: Getting <ul> and <li> out of the way
+   "display: contents" removes default styling while keeping semantic structure
+   (you do not need to make any changes here for step 2.1, but please take note of it!)
+*/
+h1 {
+    color:deeppink;
+}
+nav ul,
+nav li {
+    display: contents;
+}
+
+/* Step 2.2: Apply Flexbox to the navigation */
+nav {
+    display: flex; /* Turns nav into a flex container */
+    flex-direction: row;
+    /* You will need to continue writing here for step 2.3 */
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: oklch(80%, 3% 200%);
+    background-color: white;
+
+    margin-bottom: auto;
+    position:sticky;
+    top: 0px;
+    padding-bottom: 0.4em;
+
+}
+
+/* Step 2.3: Style navigation links for each element <a> */
+nav a {
+    flex: 1; /* step 2.2 for each element to take the same space  */
+    text-decoration: none; /* Remove the underline from the links by setting */
+    color: inherit;
+    text-align: center;
+    padding: 0.5em;
+    margin-bottom: auto;
+    background-color: white;
+}
+
+nav a.current {
+    border-bottom-width: 0.4em;
+    border-bottom-style: solid;
+    border-bottom-color: grey;
+}
+
+/* Before jumping to the next step, remember to complete step 2.3 by editing 'nav' */
+/*
+   Step 2.4: Accent color and hover styles
+*/
+nav a:hover {
+    border-bottom-width: 0.4em;
+    border-bottom-style: solid;
+    border-bottom-color: var(--color-accent);
+    background-color: oklch(from var(--color-accent) 95% 5% h);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/*  STEP 3: Contact form layout */
+
+/* Step 3.1: Integrate typography */
+    /* (you do not need to make any changes here for step 2.1, but please take note of it!) */
+input,
+textarea,
+button {
+    font: inherit; /* Ensures form elements use the same font as the body */
+}
+
+/* Step 3.2: Top-down layout */
+
+label, input, textarea, button { /* We define the elements in which we want this to take effect */
+    display: grid;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+label { /* We'll add the spacing between labels here */
+    margin-block: 0.5rem;
+}
+
+/* Step 3.2: Grid layout */
+
+    /*
+        Please work on grid layout here.
+        NOTE: this will override what you did in the previous step! remember *Specificity*
+    */
+form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1em;
+}
+
+label {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+}
+
+input,
+textarea,
+button {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    grid-column: 1 / -1;
+}
+
+/* STEP 4: Style your projects page */
+img {
+    max-width: 100%;
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+    gap: 1em;
+
+}
+
+.projects article {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+}
+
+h1 {
+    font-size: 400%;
+}
+.projects h2 {
+    margin: 0;
+}
+ h1, h2, h3, h4, h5, h6 {
+    line-height: 1.1;
+    text-wrap: balance;
+ }
+
+.projects a {
+    text-decoration: none;
+}
+
+.projects a:link {
+    color: deeppink;
+}
+
+.projects a:visited {
+    color: deeppink;
+}
+
+.projects a:hover {
+    color: red;
+}
+.projects a:active {
+    color: blue;
+}
+
+#projects {
+    width: 276.83;
+    height: 138.42;
+}
+
+#projects img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+</style>

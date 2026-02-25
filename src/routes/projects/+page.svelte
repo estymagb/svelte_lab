@@ -1,5 +1,6 @@
 <script>
     import projects from "$lib/projects.json";
+    import Project from "../../lib/Project.svelte";
 </script>
 <svelte:head>
   <title> Projects</title>
@@ -20,12 +21,7 @@
 <h1>{projects.length} Projects</h1>
 <div class="projects" id="projects">
 {#each projects as p}
-    <article>
-        <h2>{p.title}</h2>
-        <!----<h2><a href="A2/A2_report">Exploratory Analysis</a>></h2>-->
-        <img src="thumbnails/Screenshot 2026-02-20 231456.png" alt="Thumbnail of first assignment." />
-        <p>{p.description}</p>
-    </article>
+    <Project data={p}/>
 {/each}
 </div>
 
