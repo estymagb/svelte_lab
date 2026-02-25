@@ -6,9 +6,9 @@
     </li>
     <li><a class="current" href="contact">Contact</a>
     </li>
-    <li><a href="/resume">Resume</a>
+    <li><a href="resume">Resume</a>
     </li>
-    <li><a href="/projects">Projects</a>
+    <li><a href="projects">Projects</a>
     </li>
     <li><a href="https://github.com/estymagb" target="_blank">Github</a>
     </li>

@@ -8,9 +8,9 @@
 <nav>
     <li><a href=".">Home</a>
     </li>
-    <li><a href="/contact">Contact</a>
+    <li><a href="contact">Contact</a>
     </li>
-    <li><a href="/resume">Resume</a>
+    <li><a href="resume">Resume</a>
     </li>
     <li><a class="current" href="/projects">Projects</a>
     </li>

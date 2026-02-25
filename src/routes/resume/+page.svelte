@@ -2,18 +2,19 @@
   <title>Resume</title>
 </svelte:head>
 <nav>
-    <li><a class="current" href=".">Home</a>
+    <li><a href=".">Home</a>
     </li>
-    <li><a href="/contact">Contact</a>
+    <li><a href="contact">Contact</a>
     </li>
-    <li><a href="resume">Resume</a>
+    <li><a class="current" href="resume">Resume</a>
     </li>
-    <li><a href="/projects">Projects</a>
+    <li><a href="projects">Projects</a>
     </li>
     <li><a href="https://github.com/estymagb" target="_blank">Github</a>
     </li>
 </nav>
-  <h1>Resume</h1>
+
+<h1>Resume</h1>
 <section id="download-section">
         <a id="download-btn" href="Pinot_resume.pdf" download="fake-resume.pdf">Download</a>
 </section>
