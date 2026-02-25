@@ -5,7 +5,7 @@
     <div class="book">
         <img src={data.image} alt="Image Cover of {data.title}." />
         <div id="book-text">
-            <h4><a href={data.link} <h4>{data.title}</h4>
+            <h4><a href={data.link}>{data.title}</a></h4>
             <p>{data.author}</p>
         </div>
     </div>
