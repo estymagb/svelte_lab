@@ -22,8 +22,8 @@
     <label for="subject">Subject:
         <input name="subject" required>
     </label>
-    <label for="message">Message:
-        <textarea name="message" required></textarea>
+    <label for="body">Message:
+        <textarea name="body" required></textarea>
     </label>
     <button>Submit</button>
 </form>
