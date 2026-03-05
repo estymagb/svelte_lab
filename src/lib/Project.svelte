@@ -50,55 +50,6 @@ body {
 h1 {
     color:deeppink;
 }
-nav ul,
-nav li {
-    display: contents;
-}
-
-/* Step 2.2: Apply Flexbox to the navigation */
-nav {
-    display: flex; /* Turns nav into a flex container */
-    flex-direction: row;
-    /* You will need to continue writing here for step 2.3 */
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: oklch(80%, 3% 200%);
-    background-color: white;
-
-    margin-bottom: auto;
-    position:sticky;
-    top: 0px;
-    padding-bottom: 0.4em;
-
-}
-
-/* Step 2.3: Style navigation links for each element <a> */
-nav a {
-    flex: 1; /* step 2.2 for each element to take the same space  */
-    text-decoration: none; /* Remove the underline from the links by setting */
-    color: inherit;
-    text-align: center;
-    padding: 0.5em;
-    margin-bottom: auto;
-    background-color: white;
-}
-
-nav a.current {
-    border-bottom-width: 0.4em;
-    border-bottom-style: solid;
-    border-bottom-color: grey;
-}
-
-/* Before jumping to the next step, remember to complete step 2.3 by editing 'nav' */
-/*
-   Step 2.4: Accent color and hover styles
-*/
-nav a:hover {
-    border-bottom-width: 0.4em;
-    border-bottom-style: solid;
-    border-bottom-color: var(--color-accent);
-    background-color: oklch(from var(--color-accent) 95% 5% h);
-}
 
 a:hover {
     text-decoration: none;

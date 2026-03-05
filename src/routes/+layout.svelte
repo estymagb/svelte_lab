@@ -1,6 +1,35 @@
+<style>
+    :root {
+        color-scheme: dark;
+    }
+    nav {
+        --border-color: oklch(50% 10% 200/40%);
+        border-bottom: 2px solid var(--border-color);
+
+    }
+    .current {
+        border-bottom: 4px solid var(--border-color);
+    }
+
+    .color-scheme-switch {
+        top: 0;
+        right: 0;
+        position: absolute;
+        display: inline-flex;
+        gap: 4px;
+
+
+        font-size: 80%;
+        font-family: inherit;
+
+    }
+
+
+</style>
+
 <script>
     import { base } from "$app/paths";
-    import {page } from "$app/stores";
+    import { page } from "$app/stores";
     let pages = [
         {url: "/", title: "About"},
         {url: "/projects", title: "Projects"},
@@ -9,7 +38,15 @@
         {url: "https://github.com/estymagb", title: "Github"},
         // add other pages here
     ];
+    let localStorage = globalThis.localStorage ?? {};
+    let colorScheme = localStorage.colorScheme ? localStorage.colorScheme :  "light dark";
+    $: localStorage.colorScheme = colorScheme;
+    
+    let root = globalThis.document?.documentElement;
+    $: root?.style.setProperty("color-scheme", colorScheme);
+
 </script>
+
 <nav>
     {#each pages as p}
         <a href={!p.url.startsWith("http") ? base + p.url : "" + p.url}
@@ -22,6 +59,15 @@
         </a>
     {/each}
 </nav>
+<label class="color-scheme-switch">
+    Theme:
+    <select id="color-scheme-select" bind:value={colorScheme}>
+        <option value="light dark">Automatic</option>
+        <option value=light>Light</option>
+        <option value="dark">Dark</option>
+    </select>
+</label>
+
 
 
 
