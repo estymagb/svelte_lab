@@ -5,18 +5,6 @@
 <svelte:head>
   <title> Projects</title>
 </svelte:head>
-<nav>
-    <li><a href=".">Home</a>
-    </li>
-    <li><a href="contact">Contact</a>
-    </li>
-    <li><a href="resume">Resume</a>
-    </li>
-    <li><a class="current" href="/projects">Projects</a>
-    </li>
-    <li><a href="https://github.com/estymagb" target="_blank">Github</a>
-    </li>
-</nav>
 
 <h1>{projects.length} Projects</h1>
 <div class="projects" id="projects">

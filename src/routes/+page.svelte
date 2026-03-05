@@ -4,18 +4,7 @@
     import Project from "../lib/Project.svelte";
     import ReadingItem from "../lib/ReadingItem.svelte";
 </script>
-<nav>
-    <li><a class="current" href=".">Home</a>
-    </li>
-    <li><a href="contact">Contact</a>
-    </li>
-    <li><a href="resume">Resume</a>
-    </li>
-    <li><a href="projects">Projects</a>
-    </li>
-    <li><a href="https://github.com/estymagb" target="_blank">Github</a>
-    </li>
-</nav>
+
 <div class="homepage" >
     <h1>Esther Magbagbeola</h1>
     <div class= "intro-read">

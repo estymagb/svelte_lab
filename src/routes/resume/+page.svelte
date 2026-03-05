@@ -1,18 +1,6 @@
 <svelte:head>
   <title>Resume</title>
 </svelte:head>
-<nav>
-    <li><a href=".">Home</a>
-    </li>
-    <li><a href="contact">Contact</a>
-    </li>
-    <li><a class="current" href="resume">Resume</a>
-    </li>
-    <li><a href="projects">Projects</a>
-    </li>
-    <li><a href="https://github.com/estymagb" target="_blank">Github</a>
-    </li>
-</nav>
 
 <h1>Resume</h1>
 <section id="download-section">

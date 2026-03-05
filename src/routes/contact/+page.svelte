@@ -1,18 +1,6 @@
 <svelte:head>
   <title>Contact me</title>
 </svelte:head>
-<nav>
-    <li><a href=".">Home</a>
-    </li>
-    <li><a class="current" href="contact">Contact</a>
-    </li>
-    <li><a href="resume">Resume</a>
-    </li>
-    <li><a href="projects">Projects</a>
-    </li>
-    <li><a href="https://github.com/estymagb" target="_blank">Github</a>
-    </li>
-</nav>
 
 <h1>Contact</h1>
 <form action="mailto:estymagb@mit.edu" enctype="text/plain">
