@@ -14,7 +14,7 @@
     .color-scheme-switch {
         top: 0;
         right: 0;
-        width: 20%;
+        width: 10%;
         position: absolute;
         display: inline-flex;
         gap: 4px;
