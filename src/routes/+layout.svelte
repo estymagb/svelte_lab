@@ -14,6 +14,7 @@
     .color-scheme-switch {
         top: 0;
         right: 0;
+        width: 20%;
         position: absolute;
         display: inline-flex;
         gap: 4px;
@@ -41,7 +42,7 @@
     let localStorage = globalThis.localStorage ?? {};
     let colorScheme = localStorage.colorScheme ? localStorage.colorScheme :  "light dark";
     $: localStorage.colorScheme = colorScheme;
-    
+
     let root = globalThis.document?.documentElement;
     $: root?.style.setProperty("color-scheme", colorScheme);
 
