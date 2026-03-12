@@ -3,14 +3,14 @@
         "title": "A2: Visual Exploratory Analysis",
         "image": "thumbnails/a2_thumbnail.png",
         "description": "This is my first visualization assignment in 11.C35 using digital tools, also known as A2: Visualization Exploratory Analysis. Click header to see the full report on Transit Oriented Development.",
-        "year": "2026",
+        "year": 2026,
         "story": "Originally, I started with some knowledge of TOD. However, exploring in the context of housing affordability was unfamiliar to em. After this projectm I know understand teh correlated context both can exist in."
 	},
     {
         "title": "A3: Visualization Critiqiue and Design  ",
         "image": "thumbnails/a3_thumbnail.png",
         "description": "This is my second visualization assignment in 11.C35, majorly focused on redesigning a hard-to-understand visual. This is also known as A3: Visualization Critique & Redesign. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "Starting this, I knew the image could be confusing to some. Now I can know, for any visual, communication is important. "
 
 	},
@@ -18,49 +18,49 @@
         "title": "Persuasive or Deceptive Visualization?",
         "image": "thumbnails/a4_thumbnail.png",
         "description": "To potray the biases and misinformation that can preturb from data visualization, we take on a topic (Women in Authority) and discuss how different opinions can construe outlooks. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "At the beginning, I knew how misinformation can be weaponized through data. We discovered various areas of bias through objective digital tools. I know understand the dangers of data bias and how to keep an open-mind on viewing stories."
 	},
     {
         "title": "Mapping Public Transportation Patterns",
         "image": "thumbnails/a10_thumbnail.png",
         "description": "An exploration of how public transportation data can reveal commuting patterns within cities. The visualization highlights usage trends and how infrastructure shapes daily movement. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "Through this project, I analyzed transportation data to understand how people move through urban spaces. Creating the visualization helped me see how patterns in commuting can reflect broader social and economic structures. It reinforced how data visualization can uncover insights about everyday systems."
     },
     {
         "title": "Visualizing Climate Change Trends",
         "image": "thumbnails/a5_thumbnail.png",
         "description": "Exploring how climate data can be communicated through visual storytelling. This project analyzes temperature changes and how different visual formats can influence interpretation. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "While working on this visualization, I learned how powerful visual framing can be when discussing climate data. Different scales, color choices, and graph formats can shape the viewer’s perception. This project helped me better understand the responsibility involved in presenting environmental data clearly."
     },
     {
         "title": "Education Inequality Through Data",
         "image": "thumbnails/a6_thumbnail.png",
         "description": "Using datasets about school funding and access to highlight disparities in education systems. The visualization focuses on how geographic and socioeconomic differences appear through data. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "Through this project, I examined how education inequality becomes visible through numbers. I realized that the way data is organized and displayed can emphasize certain narratives. It reinforced the importance of transparency when communicating sensitive social issues."
     },
     {
         "title": "Urban Growth and Population Density",
         "image": "thumbnails/a7_thumbnail.png",
         "description": "A visualization exploring population growth in major cities and the effects of urban density over time. The project highlights patterns that shape modern metropolitan life. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "This work focused on understanding how cities grow and change over time. By mapping population density data, I began to see patterns that were not obvious at first glance. The experience showed me how visualization can reveal hidden trends in large datasets."
     },
     {
         "title": "Social Media and Information Spread",
         "image": "thumbnails/a8_thumbnail.png",
         "description": "Investigating how information travels across social media networks and how quickly narratives can shift. The visualization tracks patterns of sharing and amplification online. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "During this project, I explored how quickly information can circulate online and how easily it can be distorted. Visualizing the spread of posts and interactions helped illustrate how digital platforms amplify certain messages. It made me more aware of how digital environments shape public perception."
     },
     {
         "title": "Economic Trends in a Changing World",
         "image": "thumbnails/a9_thumbnail.png",
         "description": "A data visualization examining global economic indicators such as inflation, employment, and trade patterns. The goal is to show how economic shifts affect everyday life. Click header for more.",
-        "year": "2026",
+        "year": 2026,
         "story": "This project focused on presenting complex economic data in a way that is easier to understand. While building the visualization, I realized how design choices can make financial information either accessible or confusing. It emphasized the importance of clarity when communicating economic trends."
     }
 ]
