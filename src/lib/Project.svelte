@@ -23,6 +23,7 @@
 :root {
     --color-accent: oklch(65% 50% 0); /* Primary accent color in OKLCH format */
     --border-gray: oklch(80% 3% 200); /* Gray for borders */
+    --light-dark-reverse: light-dark(#121212, #ffffff); /**White when dark and vice versa*/
     /* ADD the rest of the color definitions here if needed! */
 }
 

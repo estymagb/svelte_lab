@@ -1,11 +1,12 @@
 <style>
     :root {
-        color-scheme: dark;
+        color-scheme: light dark;
+        --auto-color: light-dark(#ffffff, #121212);
     }
     nav {
         --border-color: oklch(50% 10% 200/40%);
         border-bottom: 2px solid var(--border-color);
-
+        background-color: var(--auto-color);
     }
     .current {
         border-bottom: 4px solid var(--border-color);
@@ -24,8 +25,6 @@
         font-family: inherit;
 
     }
-
-
 </style>
 
 <script>
