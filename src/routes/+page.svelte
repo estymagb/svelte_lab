@@ -109,7 +109,7 @@
 
     .github-stats {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-column: 1 /-1;
         border-style: solid;
 
@@ -130,7 +130,7 @@
         font-size: 80%;
     }
     #github-stat-attribute dd {
-        text-align: auto;
+        text-align: center;
         font-size: x-large;
     }
 
