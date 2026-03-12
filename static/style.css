@@ -14,6 +14,7 @@
 :root {
     --color-accent: oklch(65% 50% 0); /* Primary accent color in OKLCH format */
     --border-gray: oklch(80% 3% 200); /* Gray for borders */
+    --auto-color: light-dark(#ffffff, #121212); /* Light-dark mode activated*/
     /* ADD the rest of the color definitions here if needed! */
 }
 
@@ -54,12 +55,12 @@ nav {
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: oklch(80%, 3% 200%);
-    /* background-color: white; */
 
     margin-bottom: auto;
-    position:sticky;
-    top: 0px;
-    padding-bottom: 0.4em;
+    background-color: var(--auto-color, white);
+    position: sticky;
+    top: 0;
+    width: 100%;
 
 }
 

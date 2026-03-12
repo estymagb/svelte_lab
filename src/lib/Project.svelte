@@ -26,9 +26,6 @@
     --light-dark-reverse: light-dark(#121212, #ffffff); /**White when dark and vice versa*/
     /* ADD the rest of the color definitions here if needed! */
 }
-
-/* STEP 1: Prevent content from getting too wide */
-
 /*
     Here we can define the base style for the body element. We already added this in Lab 1, but let's complete it!
 */

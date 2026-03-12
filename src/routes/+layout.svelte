@@ -6,7 +6,11 @@
     nav {
         --border-color: oklch(50% 10% 200/40%);
         border-bottom: 2px solid var(--border-color);
-        background-color: var(--auto-color);
+        background-color: var(--auto-color, white);
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        width: 100%;
     }
     .current {
         border-bottom: 4px solid var(--border-color);
@@ -63,7 +67,7 @@
     Theme:
     <select id="color-scheme-select" bind:value={colorScheme}>
         <option value="light dark">Automatic</option>
-        <option value=light>Light</option>
+        <option value="light">Light</option>
         <option value="dark">Dark</option>
     </select>
 </label>

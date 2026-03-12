@@ -1,7 +1,7 @@
 <script>
     import projects from "$lib/projects.json";
-    import Project from "../../lib/Project.svelte";
     import ProjectNarrative from "../../lib/ProjectNarrative.svelte";
+    import Project from "$lib/Project.svelte";
 
     let years = projects.map(proj => proj.year);
     let range = Math.max(...years) - Math.min(...years);
@@ -18,14 +18,14 @@
 
 <p class="outro">Thanks for scrolling through my project story! Feel free to explore all of the projects at your leisure below.</p>
 
-<div class="projects" id="projects">
-{#each projects as p}
-    <Project data={p}/>
-{/each}
-</div>
+<section class= "projects" id="projects">
+    {#each projects as p}
+        <Project data={p}/>
+    {/each}
+</section>
 
 <style>
     .outro {
-        margin-bottom: auto;
+        margin-bottom: 3em;
     }
 </style>
