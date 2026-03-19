@@ -6,7 +6,7 @@
     export let data = [];
 
     // Adding color/bar chart
-    let margin = { top:70, right: 50, bottom: 30, left:70 };
+    let margin = { top:40, right: 50, bottom: 70, left:70 };
     let innerWidth = width - margin.left - margin.right;
     let innerHeight = height - margin.top - margin.bottom;
 
