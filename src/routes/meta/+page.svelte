@@ -1,5 +1,5 @@
 <svelte:head>
-  <title>Meta page for visualization</title>
+  <title>Meta</title>
 </svelte:head>
 
 <h1>Meta</h1>
