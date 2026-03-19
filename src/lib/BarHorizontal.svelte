@@ -93,7 +93,7 @@
             <!-- x-axis label -->
             <text
                 x={innerHeight/2 + margin.left - 30}
-                y={innerWidth - 30}
+                y={innerWidth - 0.1*innerWidth}
                 text-anchor="middle"
                 class="axis-label">
                 Lines of Code
