@@ -18,6 +18,7 @@
             v => d3.sum(v, d=> d.lines),
             d => d.language
         );
+        console.log(wrangled);
     });
 
     $: barData = d3.rollups(projects, v => v.length, d => d.year)
