@@ -20,6 +20,9 @@
         );
     });
 
+    $: barData = d3.rollups(projects, v => v.length, d => d.year)
+        .map(([year, count]) => ({label: String(year), value: count}));
+
 </script>
 <svelte:head>
   <title> Projects</title>
@@ -28,9 +31,7 @@
 <h1>{projects.length} Projects over {range} Years</h1>
 
 <section>
-    <h2>Data wrangling result</h2>
-    <pre>{JSON.stringify(wrangled, null, 2)}</pre>
-    <Bar/>
+    <Bar data={barData.sort()}/>
 </section>
 
 <p>Scroll down to see my a timeline of my projects and how I've learned from them.</p>
