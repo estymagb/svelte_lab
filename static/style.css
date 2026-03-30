@@ -231,7 +231,7 @@ h1 {
     }
 
     #resume article {
-        background-color:white;
+        background-color: var(--auto-color);
         border-radius: 15px;
         box-shadow:oklch(65% 50% 0);
         padding: 0.5em;
@@ -261,6 +261,7 @@ h1 {
     }
     #resume ul li::marker {
         content: "\26E7";
+        color: inherit;
     }
 
     #resume #resume-education p {
