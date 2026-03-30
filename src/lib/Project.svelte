@@ -4,7 +4,7 @@
 <article>
     <h2><a href={data.link}>{data.title}</a></h2>
     <img src={data.image} alt="" />
-    <p><b>{data.year} | </b>{data.description}</p>
+    <p><b>{data.year} | </b> {data.description}</p>
 </article>
 <style>
     /*
