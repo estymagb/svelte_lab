@@ -9,12 +9,10 @@
     // Adding color/bar chart
     let margin = { top:40, right: 50, bottom: 70, left:70 };
     let innerWidth = width - margin.left - margin.right;
-    let innerHeight = height - margin.top - margin.bottom;
+    let innerHeight = 0.5*(height - margin.top - margin.bottom);
 
     // Fix spacing
     let barRecHeight = 10;
-    let barCount = data.length;
-    let yAxisHeight = barCount*barRecHeight + barCount*10
 
     // Bar setup
     $: xScale = d3.scaleLinear()
@@ -23,9 +21,8 @@
 
     $: yScale = d3.scaleBand()
         .domain(data.map(d => d.label))
-        .range([0, yAxisHeight])
+        .range([0, innerHeight])
         .padding(0.1);
-
 
     $: colorScale = d3.scaleOrdinal(d3.schemeSet3)
         .domain(data.map(d => d.label));
@@ -54,7 +51,7 @@
             class="chart-title">
             {title}
         </text>
-        <g transform="translate({margin.left}, {margin.top + yAxisHeight})"
+        <g transform="translate({margin.left}, {margin.top + innerHeight})"
         bind:this={xAxis} />
         <g transform="translate({margin.left}, {margin.top})"
         bind:this={yAxis} />
@@ -94,8 +91,8 @@
 
             <!-- x-axis label -->
             <text
-                x={innerHeight/2 + margin.left - 30}
-                y={yAxisHeight + 0.5*yAxisHeight}
+                x={innerWidth/2}
+                y={1.4*innerHeight}
                 text-anchor="middle"
                 class="axis-label">
                 Lines of Code
