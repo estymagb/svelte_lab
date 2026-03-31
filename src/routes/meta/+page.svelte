@@ -3,13 +3,17 @@
 </svelte:head>
 
 <h1>Meta</h1>
-<p>Meta page to visualize project data.</p>
 <script>
   import { base } from '$app/paths';
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
   import BarHorizontal from '../../lib/BarHorizontal.svelte';
-  import Scatter from '../../lib/Scatter.svelte';
+  import {
+      computePosition,
+      autoPlacement,
+      offset,
+  } from '@floating-ui/dom';
+    import Bar from '../../lib/Bar.svelte';
 
   let locData = [];
   let commits = [];
@@ -38,25 +42,229 @@
         return ret;
       });
 
-      console.log(commits);
+      commits = d3.sort(commits, d => -d.totalLines);
 
   });
 
-  $: barData = d3.rollups(locData, v => v.length, d => d.type)
-        .map(([type, count]) => ({label: String(type), value: count}));
+    let width = 1000, height = 600;
+
+    // yScale: daytimes, xScale: days
+    $: [minDate, maxDate] = d3.extent(commits.map(d => d.date));
+    $: maxDatePlusOne  = new Date(maxDate);
+    $: maxDatePlusOne.setDate(maxDatePlusOne.getDate() + 1);
+
+    let margin = { top: 20, right: 20, bottom: 30, left: 60 };
+    let usableArea = {
+        top: margin.top,
+        right: width - margin.right,
+        bottom: height - margin.bottom,
+        left: margin.left
+    };
+
+    usableArea.width = usableArea.right - usableArea.left;
+    usableArea.height = usableArea.bottom - usableArea.top;
+
+    $: xScale = d3.scaleTime()
+        .domain([minDate, maxDatePlusOne])
+        .range([usableArea.left, usableArea.right])
+        .nice();
+
+    $: yScale = d3.scaleLinear()
+        .domain([24, 0])
+        .range([usableArea.bottom, usableArea.top]);
+
+
+    // Creates radius scale for dots in 'Number of commits by datetime'
+    $: rScale = d3.scaleSqrt()
+        .domain(d3.extent(commits.map(c => c.totalLines)))
+        .range([5, 30]);
+
+    let xAxis, yAxis;
+    $: {
+        d3.select(xAxis).call(d3.axisBottom(xScale));
+        d3.select(yAxis).call(d3.axisLeft(yScale).tickFormat(d => String(d% 24).padStart(2, "0") + ":00"));
+    }
+
+    let yAxisGridlines;
+    $: {
+        d3.select(yAxisGridlines).call(
+            d3.axisLeft(yScale)
+            .tickFormat("")
+            .tickSize(-usableArea.width)
+        );
+    }
+
+    // Watches index of commits (loc.csv) whne mouse hovers
+    let hoveredIndex = -1;
+    $: hoveredCommit = commits[hoveredIndex] ?? hoveredCommit ?? {};
+
+    // Cursor watcher to tie tooltip to mouse hover
+    let cursor = {x: 0, y:0}
+
+    // Prevent incorrect positioning based on document (webpage) size
+    let commitTooltip;
+    let tooltipPosition = {x:0, y:0}; // holds tooltipPosition to update in mouseenter evt
+
+    async function dotInteraction (index, evt) {
+        let hoveredDot = evt.target;
+        if (evt.type === "mouseenter") {
+            hoveredIndex = index;
+            cursor = {x: evt.x, y: evt.y};
+            tooltipPosition = await computePosition(hoveredDot, commitTooltip, {
+                strategy: "fixed",
+                middleware: [
+                    offset(5),
+                    autoPlacement()
+                ],
+            });
+        }
+        else if (evt.type === "mouseleave") {
+            hoveredIndex = -1;
+        } else if (evt.type === "click") {
+            let commit = commits[index]
+            if (!clickedCommits.includes(commit)) { // Not already selected, add to selection
+              clickedCommits = [...clickedCommits, commit];
+            } else { // Deselect from selection
+              clickedCommits = clickedCommits.filter(c => c!== commit);
+            }
+        }
+    }
+
+    // Making commits clickable
+    let clickedCommits = [];
+
+    // Match bar chart to selected dotted commit(s)
+    $: selectedLines = (clickedCommits.length > 0 ? clickedCommits.flatMap(d => d.lines) : locData);
+
+    $: selectedCounts = d3.rollup(
+        selectedLines,
+        v => v.length,
+        d => d.type
+    );
+
+    $: allTypes = Array.from(new Set(locData.map(d=> d.type)));
+
+    $: barData = allTypes.map(type => ({ label: String(type), value: selectedCounts.get(type)  || 0}))
+
+    export function updateBarTitle(clickedCommits) {
+        let title = '';
+        if (clickedCommits && clickedCommits.length > 0) {
+            title = "Lines of Code: Selected commits";
+        } else {
+            title = "Lines of Code: Breakdown";
+        }
+        return title;
+
+    }
+
+    $: title = updateBarTitle(clickedCommits);
 
 </script>
 
-<section class=bar-horizontal>
-  <BarHorizontal data={barData}/>
-</section>
+<div>
+    <svg viewBox= "0 0 {width} {height}">
+        <text
+                x={usableArea.width - (usableArea.right /2) + 100}
+                y={margin.top / 2 - 20}
+                text-anchor="middle"
+                class="chart-title">
+                Commits by time of day
+        </text>
+        <g transform="translate(0, {usableArea.bottom})" bind:this={xAxis} />
+        <g class="gridlines" transform="translate({usableArea.left}, 0)" bind:this={yAxisGridlines} />
+        <g transform="translate({usableArea.left}, 0)" bind:this={yAxis} />
+        <g class="dots">
+        {#each commits as commit, index}
+        <circle
+            class:selected={clickedCommits.includes(commit)}
+            on:click={ evt => dotInteraction(index, evt)}
+            on:mouseenter={evt => dotInteraction(index, evt)}
+            on:mouseleave={evt => dotInteraction(index, evt)}
+            cx={ xScale(commit.datetime)}
+            cy={yScale(commit.hourFrac)}
+            r={rScale(commit.totalLines)}
+            fill="steelblue"
+            fill-opacity=0.4
+        />
+        {/each}
+        </g>
+    </svg>
+    <dl class="info tooltip"
+    bind:this={commitTooltip}
+    hidden={hoveredIndex === -1} style="top:{tooltipPosition.y}px; left:{tooltipPosition.x}px">
+        <dt>Commit</dt>
+        <dd><a href="{hoveredCommit.url}" target="_blank">
+            {hoveredCommit.id}
+        </a></dd>
+        <dt>Author</dt>
+        <dd>{hoveredCommit.author}</dd>
+        <dt>Date</dt>
+        <dd>{hoveredCommit.datetime?.toLocaleString("en", {dateStyle: "full"})}</dd>
+        <dt>Time</dt>
+        <dd>{hoveredCommit.datetime?.toLocaleString("en", {timeStyle: "short"})}</dd>
+        <dt>Lines</dt>
+        <dd>{hoveredCommit.totalLines}</dd>
+    </dl>
+</div>
 
-<section class=scatter>
-  <Scatter commits={commits}/>
+<section class=bar-horizontal>
+  <BarHorizontal data={barData} title={title}/>
 </section>
 
 <style>
   section {
     padding-bottom: 5em;
   }
+
+  svg {
+      overflow: visible;
+      padding: 1.5em;
+  }
+
+  .chart-title {
+      font-size: 2em;
+      font-weight: bold;
+      fill: currentColor;
+      padding-bottom: 5em;
+  }
+
+  .gridlines {
+      stroke-opacity: .2;
+  }
+
+  circle {
+      transition: 200ms;
+      &:hover {
+          fill:darkgreen;
+      }
+  }
+
+  dl.info {
+      display: grid;
+      grid-template-columns: auto auto;
+
+      transition-duration: 500ms;
+      transition-property: opacity, visibility;
+
+      &[hidden]:not(:hover, :focus-within) {
+          opacity: 0;
+          visibility: hidden;
+      }
+  }
+
+  .tooltip {
+      position: fixed;
+      top: 1em;
+      left: 1em;
+      box-shadow: 1em;
+      background-color: light-dark(oklch(100% 0% 0/ 80%), rgb(46, 46, 46));
+      border-radius: 10px;
+      backdrop-filter: blur(1em);
+      padding: 1em;
+  }
+
+  .selected {
+      fill: var(--color-accent)
+  }
+
 </style>

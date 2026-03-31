@@ -4,11 +4,17 @@
     let height = 300;
 
     export let data = [];
+    export let title = "";
 
     // Adding color/bar chart
     let margin = { top:40, right: 50, bottom: 70, left:70 };
     let innerWidth = width - margin.left - margin.right;
     let innerHeight = height - margin.top - margin.bottom;
+
+    // Fix spacing
+    let barRecHeight = 10;
+    let barCount = data.length;
+    let yAxisHeight = barCount*barRecHeight + barCount*10
 
     // Bar setup
     $: xScale = d3.scaleLinear()
@@ -17,8 +23,8 @@
 
     $: yScale = d3.scaleBand()
         .domain(data.map(d => d.label))
-        .range([0, innerHeight])
-        .padding(0.2);
+        .range([0, yAxisHeight])
+        .padding(0.1);
 
 
     $: colorScale = d3.scaleOrdinal(d3.schemeSet3)
@@ -27,12 +33,16 @@
     // Adding axes
     let xAxis, yAxis;
     $: if (xAxis && yAxis) {
-        d3.select(xAxis).call(d3.axisBottom(xScale));
+        d3.select(xAxis).call(
+            d3.axisBottom(xScale)
+            .ticks(Math.min(d3.max(data, d=> d.value), 10))
+        );
         d3.select(yAxis).call(d3.axisLeft(yScale));
     }
 
     // Annotation
     $: maxBar = d3.greatest(data, d => d.value);
+
 
 </script>
 <div class="container">
@@ -42,19 +52,19 @@
             y={margin.top / 2}
             text-anchor="middle"
             class="chart-title">
-            Lines of Code by Language
+            {title}
         </text>
-        <g transform="translate({margin.left}, {margin.top + innerHeight})"
+        <g transform="translate({margin.left}, {margin.top + yAxisHeight})"
         bind:this={xAxis} />
-        <g transform="translate({margin.left-1}, {margin.top})"
+        <g transform="translate({margin.left}, {margin.top})"
         bind:this={yAxis} />
-        <g transform="translate({margin.left}, {margin.top})">
+        <g transform="translate({margin.left +1}, {margin.top})">
             <!-- Draw bars-->
             {#each data as d}
             <rect
                 y={yScale(d.label)}
                 width={xScale(d.value)}
-                height={yScale.bandwidth()}
+                height={barRecHeight}
                 fill={colorScale(d.label)}
                 />
             {/each}
@@ -65,25 +75,17 @@
                     x={0}
                     y={yScale(maxBar.label)}
                     width={xScale(maxBar.value)}
-                    height={yScale.bandwidth()}
+                    height={barRecHeight}
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
                 />
-                <!-- leader line -->
-                <line
-                    x1={xScale(maxBar.value)/2 }
-                    y1={yScale(maxBar.label) + yScale.bandwidth()}
-                    x2={xScale(maxBar.value)/2 +5}
-                    y2={yScale(maxBar.label) + yScale.bandwidth() + 30}
-                    stroke="currentColor"
-                    stroke-width="1"
-                />
-                <!-- annotation text at end of leader line -->
+                <!-- annotation text -->
                 <text
-                    x={xScale(maxBar.value)/2 +5}
-                    y={yScale(maxBar.label) + yScale.bandwidth() + 35}
+                    x={xScale(maxBar.value) + 5}
+                    y={yScale(maxBar.label) + 5}
                     dominant-baseline="middle"
+                    text-anchor="start"
                     class="annotation">
                     Most lines of code
                 </text>
@@ -93,7 +95,7 @@
             <!-- x-axis label -->
             <text
                 x={innerHeight/2 + margin.left - 30}
-                y={innerWidth - 0.1*innerWidth}
+                y={yAxisHeight + 0.5*yAxisHeight}
                 text-anchor="middle"
                 class="axis-label">
                 Lines of Code
@@ -101,18 +103,18 @@
 
             <!-- y-axis label -->
             <text
-                x={-(innerHeight / 2)}
-                y={-margin.left + 30}
+                y={-margin.left}
                 text-anchor="middle"
                 transform="rotate(-90)"
                 class="axis-label">
-                Programming Language
+                <tspan x="-40" dy="0.5em">Programming</tspan>
+                <tspan x="-40" dy="1.0em">Language</tspan>
             </text>
         </g>
 
     </svg>
     <!-- Legend -->
-    <ul class="legend">
+    <ul class="legend" >
         {#each data as d}
             <li style="--color: {colorScale(d.label)}">
                 <span class="swatch"></span>
@@ -128,8 +130,6 @@
     }
 
     svg {
-        max-width: 100%;
-        height: auto;
         overflow: visible;
     }
     .chart-title {
@@ -140,11 +140,12 @@
 
     .legend {
         flex: 1;
+        padding-top: 10%;
     }
 
     .annotation {
         fill: currentColor;
-        font-size: 0.7em;
+        font-size: 0.4em;
         font-style: italic;
     }
 
