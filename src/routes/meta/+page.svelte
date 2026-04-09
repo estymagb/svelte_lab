@@ -5,6 +5,7 @@
 <h1>Meta</h1>
 <script>
   import { base } from '$app/paths';
+  import { browser } from '$app/environment';
   import { onMount } from 'svelte';
   import * as d3 from 'd3';
   import BarHorizontal from '../../lib/BarHorizontal.svelte';
@@ -134,7 +135,6 @@
     let clickedCommits = [];
 
     // Match bar chart to selected dotted commit(s)
-    $: selectedLines = (clickedCommits.length > 0 ? clickedCommits.flatMap(d => d.lines) : locData);
 
     $: selectedCounts = d3.rollup(
         selectedLines,
@@ -146,10 +146,10 @@
 
     $: barData = allTypes.map(type => ({ label: String(type), value: selectedCounts.get(type)  || 0}))
 
-    export function updateBarTitle(clickedCommits) {
+    export function updateBarTitle(selectedCommits) {
         let title = '';
-        if (clickedCommits && clickedCommits.length > 0) {
-            title = "Lines of Code: Selected commits";
+        if (selectedCommits && selectedCommits.length > 0) {
+            title = `Lines of Code: ${selectedCommits.length} Selected commits`;
         } else {
             title = "Lines of Code: Breakdown";
         }
@@ -157,12 +157,49 @@
 
     }
 
-    $: title = updateBarTitle(clickedCommits);
+    $: title = updateBarTitle(selectedCommits);
+
+    // Lab 8 Brushing
+    let brushSelection;
+    $: brushSelection = null;
+
+    function brushed (evt) {
+        brushSelection = evt.selection;
+    }
+
+
+    function isCommitBrushed (commit) {
+	if (!brushSelection) {
+		return false;
+	}
+    let min = {x: brushSelection[0][0], y: brushSelection[0][1]};
+    let max = {x: brushSelection[1][0], y: brushSelection[1][1]};
+    let x = xScale(commit.date);
+    let y = yScale(commit.hourFrac);
+    return x >= min.x && x <= max.x && y >= min.y && y <= max.y;
+
+    }
+
+    $: brushedCommits = brushSelection ? commits.filter(isCommitBrushed) : [];
+    $: selectedCommits = Array.from(new Set([...clickedCommits, ...brushedCommits]));
+    $: selectedLines = (selectedCommits.length > 0 ? selectedCommits : commits).flatMap(d => d.lines);
+
+    let svg;
+
+    $: if (browser && svg) {
+        d3.select(svg).call(d3.brush()
+        .extent([[usableArea.left, usableArea.top], [usableArea.right, usableArea.bottom]])
+        .on("start brush end", brushed));
+        d3.select(svg).selectAll(".dots, .overlay ~ *").raise();
+    }
+
 
 </script>
 
 <div>
-    <svg viewBox= "0 0 {width} {height}">
+    <svg
+    bind:this={svg}
+    viewBox="0 0 {width} {height}">
         <text
                 x={usableArea.width - (usableArea.right /2) + 100}
                 y={margin.top / 2 - 20}
@@ -176,7 +213,7 @@
         <g class="dots">
         {#each commits as commit, index}
         <circle
-            class:selected={clickedCommits.includes(commit)}
+            class:selected={selectedCommits.includes(commit)}
             on:click={ evt => dotInteraction(index, evt)}
             on:mouseenter={evt => dotInteraction(index, evt)}
             on:mouseleave={evt => dotInteraction(index, evt)}
@@ -265,6 +302,20 @@
 
   .selected {
       fill: var(--color-accent)
+  }
+
+  @keyframes marching-ants {
+    to {
+        stroke-dashoffset: -8;
+    }
+  }
+
+  svg :global(.selection) {
+    fill-opacity: 10%;
+    stroke: light-dark(black, white);
+    stroke-opacity: 70%;
+    stroke-dasharray: 5 3;
+    animation: marching-ants 2s linear infinite;
   }
 
 </style>
