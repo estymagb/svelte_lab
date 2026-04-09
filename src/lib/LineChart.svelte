@@ -131,7 +131,7 @@
     <!-- y-axis label -->
     <text
         x={-(usableArea.top + (usableArea.bottom - usableArea.top) / 2)}
-        y={10}
+        y={margin.left}
         text-anchor="middle"
         transform="rotate(-90)"
         class="axis-label">
@@ -147,7 +147,7 @@
     }
     .line-title {
         text-align: center;
-        font-size: 3.0em;
+        font-size: 2.0em;
     }
 
     .axis-label {
