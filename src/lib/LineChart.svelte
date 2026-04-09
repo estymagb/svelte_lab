@@ -31,10 +31,48 @@
         d3.select(xAxis).call(d3.axisBottom(xScale));
         d3.select(yAxis).call(d3.axisLeft(yScale));
     }
+
+    // Step 3: Day of Week Highlighting
+    let hoveredDay = "Day"; // default setting
+
+    $: dayRegions = (() => {
+        // if there's no data, there are no regions!
+        if (data.length === 0) return [];
+        return data.map((d, i, arr) => {
+            // get the previous date, if it exists
+            const prev = arr[i - 1];
+            // get the next date, if it exists
+            const next = arr[i + 1];
+            // define the left side of the region, which might be the edge of the axis if this is the first date
+            const left = prev ? new Date((d.date.getTime() + prev.date.getTime()) / 2) : d.date;
+            // define the right side of the region, which might be the edge of the axis if this is the last date
+            const right = next ? new Date((d.date.getTime() + next.date.getTime()) / 2) : d.date;
+
+            return {
+                date: d.date,
+                weekday: d.date.toLocaleString("en", { weekday: "long" }), // e.g. "Monday"
+                x: xScale(left),
+                width: xScale(right) - xScale(left),
+            };
+        });
+    })();
+
+    $: console.log(hoveredDay);
+
+    // Helper function to build Highlight Bands (Step 3.3)
+    function buildBands(hoveredDay, regionWeekday) {
+        if (hoveredDay === regionWeekday+"s") {
+            return "var(--color-accent)";
+        } else {
+            return "transparent";
+        }
+
+    }
+
 </script>
 
-<h3 class="line-title">Lines Edited by Day</h3>
-<svg viewBox= "0 0 {width} {height}">
+<h3 class="line-title">Lines Edited on {hoveredDay}</h3>
+<svg viewBox= "0 0 {width} {height}" on:mouseleave={() => hoveredDay = "Day"}>
     <g transform="translate({margin.left-20}, {height - margin.bottom + 2})"
     bind:this={xAxis} />
     <g transform="translate({1.6*usableArea.left}, {margin.top - 20})"
@@ -47,11 +85,37 @@
     />
 
     {#each data as d}
+        {@const isHighlighted = d.date.toLocaleString("en", { weekday: "long" }) === hoveredDay.slice(0,hoveredDay.length-1)}
         <circle
             cx={xScale(d.date)}
             cy={yScale(d.count)}
             r="3"
-            fill="steelblue"
+            fill="var(--color-accent)"
+        />
+
+        {#if isHighlighted}
+            <text
+                x={xScale(d.date)}
+                y={usableArea.top + 15}
+                text-anchor="middle"
+                font-size="12"
+                fill="var(--color-accent)"
+            >
+                {Math.round(d.count)}
+            </text>
+        {/if}
+    {/each}
+
+    <!-- invisible hover regions -->
+    {#each dayRegions as region}
+        <rect
+            x={region.x}
+            y={usableArea.top}
+            width={region.width}
+            height={usableArea.bottom - usableArea.top}
+            fill={buildBands(hoveredDay, region.weekday)}
+            fill-opacity="20%"
+            on:mouseenter={() => hoveredDay = region.weekday+"s"}
         />
     {/each}
 
