@@ -15,6 +15,7 @@
       offset,
   } from '@floating-ui/dom';
     import Bar from '../../lib/Bar.svelte';
+    import LineChart from '../../lib/LineChart.svelte';
 
   let locData = [];
   let commits = [];
@@ -193,6 +194,26 @@
         d3.select(svg).selectAll(".dots, .overlay ~ *").raise();
     }
 
+    // Data wrangling: lines edited by date
+    let linesByDate = [];
+    $: {
+	// 1. Get the count for each date in the data
+	const rolled = d3.rollups(
+		locData,
+		v => v.length,
+		d => d3.timeDay.floor(d.datetime)
+	).map(([date, count]) => ({ date, count }));
+
+	// 2. Get an array of all days covered by the data
+	const [minDate, maxDate] = d3.extent(rolled, d => d.date);
+	const allDays = d3.timeDays(minDate, d3.timeDay.offset(maxDate, 1));
+
+	// 3. Build linesByDate by filling all undefined dates with 0 counts
+	linesByDate = allDays.map(date => ({
+		date,
+		count: rolled.find(d => d.date.getTime() === date.getTime())?.count ?? 0
+	}));
+}
 
 </script>
 
@@ -248,9 +269,13 @@
   <BarHorizontal data={barData} title={title}/>
 </section>
 
+<section class=line-chart>
+    <LineChart data = {linesByDate} />
+</section>
+
 <style>
   section {
-    padding-bottom: 5em;
+    padding-bottom: 0em;
   }
 
   svg {
