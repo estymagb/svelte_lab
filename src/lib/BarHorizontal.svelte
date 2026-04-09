@@ -43,7 +43,7 @@
 
 </script>
 <div class="container">
-    <svg viewBox="0 0 {width} {height}">
+    <svg viewBox="0 0 {width} {0.6*height}">
         <text
             x={margin.left + innerWidth / 2}
             y={margin.top / 2}

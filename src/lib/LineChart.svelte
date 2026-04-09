@@ -18,7 +18,7 @@
 
     $: yScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.count)])
-        .range([usableArea.bottom, usableArea.top])
+        .range([usableArea.bottom+margin.top, usableArea.top])
         .nice();
 
     $: line = d3.line()
@@ -28,8 +28,12 @@
 
     let xAxis, yAxis;
     $: if (xAxis && yAxis) {
-        d3.select(xAxis).call(d3.axisBottom(xScale));
-        d3.select(yAxis).call(d3.axisLeft(yScale));
+        d3.select(xAxis)
+        .call(d3.axisBottom(xScale))
+        .style("font-size", "15px");
+
+        d3.select(yAxis).call(d3.axisLeft(yScale))
+        .style("font-size", "15px");
     }
 
     // Step 3: Day of Week Highlighting
@@ -73,9 +77,9 @@
 
 <h3 class="line-title">Lines Edited on {hoveredDay}</h3>
 <svg viewBox= "0 0 {width} {height}" on:mouseleave={() => hoveredDay = "Day"}>
-    <g transform="translate({margin.left-20}, {height - margin.bottom + 2})"
+    <g transform="translate({margin.left-20}, {height - 0.65*margin.bottom})"
     bind:this={xAxis} />
-    <g transform="translate({1.6*usableArea.left}, {margin.top - 20})"
+    <g transform="translate({1.65*usableArea.left}, {margin.top - 20})"
     bind:this={yAxis} />
     <path
         d={line(data)}
@@ -122,7 +126,7 @@
      <!-- x-axis label -->
     <text
         x={usableArea.left + (usableArea.right - usableArea.left) / 2}
-        y={height - 5}
+        y={height + 20}
         text-anchor="middle"
         class="axis-label">
         Date
@@ -131,7 +135,7 @@
     <!-- y-axis label -->
     <text
         x={-(usableArea.top + (usableArea.bottom - usableArea.top) / 2)}
-        y={margin.left}
+        y={margin.left - 20}
         text-anchor="middle"
         transform="rotate(-90)"
         class="axis-label">
