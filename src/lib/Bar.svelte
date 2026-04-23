@@ -111,6 +111,7 @@
                 {#if maxBar}
                     <!-- highlight outline around the tallest bar -->
                     <rect
+                        class="max-bar"
                         x={xScale(maxBar.label)}
                         y={yScale(maxBar.value)}
                         width={xScale.bandwidth()}
@@ -212,6 +213,10 @@
         stroke-width: 1;
         transition: 300ms;
         outline: none;
+    }
+
+    .max-bar {
+        stroke: white;
     }
 
     svg:hover rect:not(:hover), .container:focus-within rect:not(:focus-visible) { opacity: 50%; }
